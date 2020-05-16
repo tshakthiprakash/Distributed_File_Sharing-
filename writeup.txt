@@ -1,0 +1,26 @@
+Steps to execute the application:
+1.	I have written this application using Java in Eclipse IDE Neon 3 version 4.6.3. Please download this IDE to run this code.
+2.	Create a folder in D drive named “5306”. This folder contains all the shared directories. Each shared directory contains a test.txt file.
+3.	Open the IDE, Create a new Java Project and in the default package import the Server.java and Client.java file which is provided in the submission file.
+4.	Once imported, run the Server.java first. A GUI window titled Server will open. Press Start server button to start the server.
+5.	Then run the Client.java thrice to have three client GUI window. In each window give the name and click connect to start the client-server connection.
+6.	In Server GUI Click on Display Clients button to display all the clients connected at that point of time.
+7.	In Client GUI click on Display Files button to print the names of all files in their directory.
+8.	You can disconnect the client and stop the server with respective buttons in the GUI windows.
+9.	When the test.txt file inside the client directories is deleted the server is notified by the client about the deletion.
+10.	Server sends election message to the other clients for deletion operation and timer for the response from the client starts in the server. The timer is set for 3 seconds.
+11.	If other two clients voted yes within 3 seconds, server sends notification to the clients for delete operation. The test.txt file is deleted from all the client repositories.
+12.	If at least one client did not reply (implicit denial), the operation is aborted and the deleted file is restored in the client repository. 
+13.	Voting process is made random process based on generation of odd or even numbers from 1 to 10.
+Note: The test.txt file from the server is not deleted for the restoration purpose. Please copy the file from server to the shared directories to continue running the application.
+
+References: 
+•	https://www.geeksforgeeks.org/introducing-threads-socket-programming-java/ 
+•	https://www.geeksforgeeks.org/multi-threaded-chat-application-set-1/
+•	https://www.tutorialspoint.com/swing/swing_gridbaglayout.htm
+•	https://www.guru99.com/java-swing-gui.html  
+•	https://www.baeldung.com/java-nio2-watchservice
+•	https://www.geeksforgeeks.org/moving-file-one-directory-another-using-java/ 
+•	https://www.baeldung.com/java-copy-file 
+•	https://dzone.com/articles/multi-threading-java-swing
+•	https://stackoverflow.com/questions/4044726/how-to-set-a-timer-in-java
