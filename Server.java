@@ -54,49 +54,49 @@ public class Server {
 	}
 	
 /* code Reference : https://www.tutorialspoint.com/swing/swing_gridbaglayout.htm
-					https://www.guru99.com/java-swing-gui.html */
+		    https://www.guru99.com/java-swing-gui.html */
 // function to initialize the GUI components
 	public void intializecomponents()
 	{
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1000, 1000);
-        GridLayout grid = new GridLayout(2,1);
-        outerpanel = new JPanel(grid);
-        outerpanel.setBounds(0, 0, 1000, 1000);
-        GridBagLayout panel1layout = new GridBagLayout();
-        panel1.setLayout(panel1layout);
-        GridBagConstraints gbc = new GridBagConstraints();
-        panel1.setBounds(0, 0, 900,300 );
-        gbc.insets = new Insets(2,2,2,2);
+		frame.setSize(1000, 1000);
+		GridLayout grid = new GridLayout(2,1);
+		outerpanel = new JPanel(grid);
+		outerpanel.setBounds(0, 0, 1000, 1000);
+		GridBagLayout panel1layout = new GridBagLayout();
+		panel1.setLayout(panel1layout);
+		GridBagConstraints gbc = new GridBagConstraints();
+		panel1.setBounds(0, 0, 900,300 );
+		gbc.insets = new Insets(2,2,2,2);
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		panel1.add(start_server,gbc);
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		panel1.add(stop_server,gbc);
+
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		panel1.add(Client_list_but,gbc);
+
+		panel2.setBounds(0, 400, 900, 600);
+		outerpanel.add(panel1);
+		outerpanel.add(panel2);
+		serv_out.setRows(18);
+		serv_out.setColumns(60);
+		serv_out.setWrapStyleWord(true);
+		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(new Dimension(500,200));
+		panel2.add(scrollPane);
+		frame.add(outerpanel);
+		frame.setVisible(true);	
         
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        panel1.add(start_server,gbc);
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        panel1.add(stop_server,gbc);
-        
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridx = 2;
-        gbc.gridy = 0;
-        panel1.add(Client_list_but,gbc);
-        
-        panel2.setBounds(0, 400, 900, 600);
-        outerpanel.add(panel1);
-        outerpanel.add(panel2);
-        serv_out.setRows(18);
-        serv_out.setColumns(60);
-        serv_out.setWrapStyleWord(true);
-        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-        scrollPane.setPreferredSize(new Dimension(500,200));
-        panel2.add(scrollPane);
-        frame.add(outerpanel);
-        frame.setVisible(true);	
-        
-/* code reference : https://stackoverflow.com/questions/21879243/how-to-create-on-click-event-for-buttons-in-swing */
+        /* code reference : https://stackoverflow.com/questions/21879243/how-to-create-on-click-event-for-buttons-in-swing */
         //function to find the list of clients connected to the server
         Client_list_but.addActionListener(new ActionListener(){
 			  public void actionPerformed(ActionEvent e)
@@ -110,7 +110,7 @@ public class Server {
 				  
 				  if(serverstopkey==0)
 					  serv_out.append("\n" + conn_clients );
-			   }
+			   	  }
 			  });
         
         //function to stop the server and disconnect the server successfully
@@ -121,36 +121,28 @@ public class Server {
 				  serv_out.append("\n Stopping the server");
 				  String stop_message = "serverstop";
 				  
-				  for (ClientHandler mc : Server.ar)  
-	                { 
-					  	
-	                    try {
-	                    		if(mc.isactive){
-	                    		mc.dos.writeUTF(stop_message);
-	                    		mc.setBreakKey(); //key used to break the thread running for each client
-								}
-	                    	
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-	                }
-				  
-				  
-				  try {
-					  //closing the input and output stream of the server
-					dis.close();
-					dos.close();
-				} catch (IOException e1) {
-					e1.printStackTrace();
+				  for (ClientHandler mc : Server.ar){ 	  	
+	                    		try {
+						if(mc.isactive){
+						mc.dos.writeUTF(stop_message);
+						mc.setBreakKey(); //key used to break the thread running for each client
+									}
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}  
+				try {
+					//closing the input and output stream of the server
+				    dis.close();
+				    dos.close();
+				} 
+				catch (IOException e1) {
+				    e1.printStackTrace();
 				}
-				  serv_out.append("\n Disconnected all the client.\n Server Stopped Successfully");
+				serv_out.append("\n Disconnected all the client.\n Server Stopped Successfully");
 			   }
-			  });
-	}
-	
-
-	
+		});
+}
 /* code reference : https://dzone.com/articles/multi-threading-java-swing 
 Running the Server GUI in a separate thread */
 	public static void main(String[] args) throws IOException  
@@ -187,15 +179,11 @@ Running the Server GUI in a separate thread */
         // client request 
 		
         while (true)  
-        { 
-             
-              
+        {   
             try 
             { 
                 // socket object to receive incoming client requests 
-                s = ss.accept(); 
-                                  
-                  
+                s = ss.accept();  
                 // obtaining input and out streams 
                 dis = new DataInputStream(s.getInputStream()); 
                 dos = new DataOutputStream(s.getOutputStream()); 
@@ -233,35 +221,25 @@ Running the Server GUI in a separate thread */
                 }
                 else
                 {
-           
-                	client_list.add(in_coming_client);
+           		client_list.add(in_coming_client);
                 	serv_out.append("\n A new client " +in_coming_client+ " is connected");  
-                    serv_out.append("\n Assigning new thread for this client");
-                    dos.writeUTF("Connected to the Server !! Welcome message from Server");
-                    
-                    ClientHandler mtch = new ClientHandler(s, dis, dos,in_coming_client,serv_out);
-                    ar.add(mtch);
-                    // create a new thread object 
-                     t = new Thread(mtch);  
-      
-                    // Invoking the start() method 
-                    t.start();
-                    
-                   
-                    client_count++;
-                }
-                
-                
-                  
+                    	serv_out.append("\n Assigning new thread for this client");
+                    	dos.writeUTF("Connected to the Server !! Welcome message from Server");
+                    	ClientHandler mtch = new ClientHandler(s, dis, dos,in_coming_client,serv_out);
+                    	ar.add(mtch);
+                    	// create a new thread object 
+                     	t = new Thread(mtch);  
+                    	// Invoking the start() method 
+                    	t.start();
+                    	client_count++;
+		}  
             } 
             catch (Exception e){ 
                 s.close(); 
                 e.printStackTrace(); 
             } 
         }
-      
     }
-	
 } 
   
 // ClientHandler class 
@@ -352,45 +330,48 @@ class ClientHandler implements Runnable
                     timer.schedule(new TimerTask() {
                     	  @Override
                     	  public void run() {
-                    		  if(count >= 2)// checks for the vote count 
-                              {
-                              	serv_out.append("\n All clients has accepted to delete the file");
-                              	for (ClientHandler cl : Server.ar)
-                              	{
-                              		try {
-										cl.dos.writeUTF("Delete");
-										count = 0; // resetting the vote count
-									} catch (IOException e) {
-										e.printStackTrace();
-									}
-                              	}
+                    		if(count >= 2)// checks for the vote count 
+					{
+					serv_out.append("\n All clients has accepted to delete the file");
+					for (ClientHandler cl : Server.ar)
+					{
+						try {
+							cl.dos.writeUTF("Delete");
+							count = 0; // resetting the vote count
+						} 
+						catch (IOException e) {
+							e.printStackTrace();
+						}
+					}
                               }
-                    		  else{
-                    			  serv_out.append("\n All clients has not accepted to delete the file");
-                    			  for (ClientHandler cl : Server.ar)
+                    	      else{
+                    	 		serv_out.append("\n All clients has not accepted to delete the file");
+                    			 for (ClientHandler cl : Server.ar)
                                 	{
                                 		try {
-  										cl.dos.writeUTF("NODelete");
-  										count = 0; // resetting the vote count
-  										if(cl.username.equals(currentuser)){
-  											cl.dos.writeUTF("restore");// if the vote fails, sends the restore message to the client
-  											Files.copy 
-  											(Paths.get("D:\\5306\\server\\test.txt"),  
-  										     Paths.get("D:\\5306\\"+cl.username+"\\test.txt"),StandardCopyOption.REPLACE_EXISTING);
-  											}
-  									} catch (IOException e) {
-  										e.printStackTrace();
-  									}
+							cl.dos.writeUTF("NODelete");
+							count = 0; // resetting the vote count
+							if(cl.username.equals(currentuser)){
+								cl.dos.writeUTF("restore");// if the vote fails, sends the restore message to the client
+								Files.copy 
+								(Paths.get("D:\\5306\\server\\test.txt"),  
+							     Paths.get("D:\\5306\\"+cl.username+"\\test.txt"),StandardCopyOption.REPLACE_EXISTING);
+								}
+  						} 
+						catch (IOException e) 
+						{
+  							e.printStackTrace();
+  						}
                                 	}
-                    	  }
-                    		  }
-                    	}, 3000);// timer for three seconds
+                    	  	}
+                    }
+                 }, 3000);// timer for three seconds
                     
                 }
              
             } catch (IOException e) { 
 
-            } 
+           } 
         } 
     } 
 } 
